@@ -18,11 +18,11 @@ enum SaveState {
   ERROR
 }
 
-const retrieveDataFromLocalStorage = async () => {
-  return window.localStorage.getItem(props.sessionId)
+const retrieveDataFromLocalStorage = (): string | undefined => {
+  return window.localStorage.getItem(props.sessionId) ?? undefined
 }
 
-const text = ref<string | null>(null)
+const text = ref<string | undefined>(undefined)
 const saveState = ref(SaveState.SAVED)
 const saveErrorMessage = ref<string | null>(null)
 const loadState = ref(LoadState.LOADING)
@@ -37,8 +37,8 @@ onBeforeMount(async () => {
     loadErrorMessage.value = isError(error)
       ? error.message
       : error != null
-      ? error.toString()
-      : null
+        ? error.toString()
+        : null
     console.error(error)
   }
 })
@@ -48,7 +48,7 @@ const wordCount = computed(() => {
   return wordCount
 })
 
-const logChange = (event: unknown) => {
+const onInput = () => {
   try {
     saveState.value = SaveState.SAVING
     window.localStorage.setItem(props.sessionId, text.value || '')
@@ -58,8 +58,8 @@ const logChange = (event: unknown) => {
     saveErrorMessage.value = isError(error)
       ? error.message
       : error != null
-      ? error.toString()
-      : null
+        ? error.toString()
+        : null
     console.error(error)
   }
 }
@@ -69,18 +69,9 @@ const logChange = (event: unknown) => {
   <main>
     <label for="writing-area">Write something:</label>
 
-    <textarea
-      :disabled="loadState != LoadState.LOADED"
-      v-model="text"
-      v-on:input="logChange"
-      id="writing-area"
-      name="writing-area"
-      rows="30"
-      min-rows="2"
-      cols="80"
-      placeholder="It was a dark and stormy night..."
-      spellcheck="true"
-    ></textarea>
+    <textarea :disabled="loadState != LoadState.LOADED" v-model="text" v-on:input="onInput" id="writing-area"
+      name="writing-area" rows="30" min-rows="2" cols="80" placeholder="It was a dark and stormy night..."
+      spellcheck="true"></textarea>
 
     <p>
       <span>Word count: {{ wordCount }}</span>
