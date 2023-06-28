@@ -1,6 +1,6 @@
-# Just Write
+# Write Now
 
-A simple static web app to help motivate you to _just write_.
+A simple static web app to help motivate you to write.
 
 ## Usage
 

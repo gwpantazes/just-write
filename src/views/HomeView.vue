@@ -6,12 +6,12 @@ import { RouterLink } from 'vue-router'
   <h1>Home</h1>
   <RouterLink to="/session">New Writing Session</RouterLink>
 
-  <div>
+  <div id="streak">
     <h2>Streak: 0?</h2>
     <p>Placeholder...</p>
   </div>
 
-  <div>
+  <div id="sessions">
     <h2>Sessions</h2>
     <p>Placeholder...</p>
   </div>
